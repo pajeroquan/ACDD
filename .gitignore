@@ -94,3 +94,12 @@ proguard/
 /obj/
 obj/
 ACDDLauncher/assets/bundle-info.json
+
+# Local-life stack
+**/node_modules/
+**/dist/
+services/api/configs/config.yaml
+*.exe
+.partner-api
+.env
+.env.*

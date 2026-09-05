@@ -1,0 +1,40 @@
+server:
+  addr: ":8080"
+  mode: debug
+
+mysql:
+  dsn: "partner:partner@tcp(127.0.0.1:3306)/partner?parseTime=true&loc=Local&charset=utf8mb4"
+
+jwt:
+  admin_secret: "change-me-admin-secret"
+  user_secret: "change-me-user-secret"
+  admin_ttl_hours: 24
+  user_ttl_hours: 168
+
+crypto:
+  aes_key: "0123456789abcdef0123456789abcdef"
+
+wechat:
+  app_id: ""
+  app_secret: ""
+  mch_id: ""
+  mch_api_v3_key: ""
+  mch_serial_no: ""
+  notify_url: "http://localhost:8080/api/pay/notify"
+  mock_pay: true
+  mock_login: true
+
+llm:
+  base_url: "https://api.openai.com/v1"
+  api_key: ""
+  model: "gpt-4o-mini"
+  mock: true
+
+miniprogram:
+  path_prefix: "/pages/discover/index"
+  link_base: "https://example.com/mp"
+  session_ttl_days: 7
+
+seed:
+  admin_username: "admin"
+  admin_password: "admin123"
