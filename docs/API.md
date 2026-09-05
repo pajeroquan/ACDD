@@ -17,6 +17,7 @@
 | POST | `/admin/match/:id/confirm` | 确认候选 `{partner_ids}` → `{sid, mini_program_url}` |
 | GET | `/admin/orders` | 订单列表 |
 | GET | `/admin/orders/:id` | 订单详情 |
+| POST | `/admin/orders/:id/refund` | 退款（admin/finance；取消分成 ledger） |
 | GET | `/admin/commission/report` | 工会分成汇总 |
 | GET | `/admin/notifications` | 搭子通知 inbox |
 

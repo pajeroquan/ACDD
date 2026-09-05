@@ -181,6 +181,18 @@ func (h *Handler) GetOrder(c *gin.Context) {
 	response.OK(c, o)
 }
 
+func (h *Handler) RefundOrder(c *gin.Context) {
+	id, _ := strconv.ParseUint(c.Param("id"), 10, 64)
+	o, err := h.Svc.RefundOrder(id)
+	if err != nil {
+		response.BadRequest(c, err.Error())
+		return
+	}
+	aid := middleware.AdminID(c)
+	h.Svc.Audit(&aid, "order.refund", "order", strconv.FormatUint(id, 10), nil)
+	response.OK(c, o)
+}
+
 func (h *Handler) CommissionReport(c *gin.Context) {
 	list, err := h.Svc.CommissionReport()
 	if err != nil {

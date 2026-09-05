@@ -44,4 +44,7 @@ curl -sf -X POST "$BASE/api/pay/mock-notify" -H 'Content-Type: application/json'
 echo "== result =="
 curl -sf "$BASE/admin/orders/$OID" -H "Authorization: Bearer $TOKEN" | python3 -m json.tool | head -30
 curl -sf "$BASE/admin/commission/report" -H "Authorization: Bearer $TOKEN" | python3 -m json.tool
+
+echo "== refund =="
+curl -sf -X POST "$BASE/admin/orders/$OID/refund" -H "Authorization: Bearer $TOKEN" | python3 -c "import json,sys; d=json.load(sys.stdin); assert d['data']['status']=='refunded', d; print('refunded ok')"
 echo OK

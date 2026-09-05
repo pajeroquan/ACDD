@@ -59,6 +59,7 @@ export const createPartner = (data) => api.post('/admin/partners', data)
 export const updatePartner = (id, data) => api.put(`/admin/partners/${id}`, data)
 
 export const listOrders = (params) => api.get('/admin/orders', { params })
+export const refundOrder = (id) => api.post(`/admin/orders/${id}/refund`)
 export const commissionReport = () => api.get('/admin/commission/report')
 
 export default api

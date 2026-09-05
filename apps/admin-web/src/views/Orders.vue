@@ -30,6 +30,16 @@
       <el-table-column label="创建时间" width="170">
         <template #default="{ row }">{{ formatTime(row.created_at) }}</template>
       </el-table-column>
+      <el-table-column label="操作" width="100" fixed="right">
+        <template #default="{ row }">
+          <el-button
+            v-if="canRefund(row.status)"
+            link
+            type="danger"
+            @click="onRefund(row)"
+          >退款</el-button>
+        </template>
+      </el-table-column>
     </el-table>
     <div class="pager">
       <el-pagination
@@ -46,7 +56,8 @@
 
 <script setup>
 import { onMounted, ref } from 'vue'
-import { listOrders } from '../api'
+import { ElMessage, ElMessageBox } from 'element-plus'
+import { listOrders, refundOrder } from '../api'
 
 const list = ref([])
 const total = ref(0)
@@ -68,6 +79,17 @@ async function load() {
   } finally {
     loading.value = false
   }
+}
+
+function canRefund(s) {
+  return ['pending_pay', 'paid', 'notified', 'in_service'].includes(s)
+}
+
+async function onRefund(row) {
+  await ElMessageBox.confirm(`确认退款订单 ${row.order_no}？`, '退款确认', { type: 'warning' })
+  await refundOrder(row.id)
+  ElMessage.success('已退款')
+  load()
 }
 
 function formatDate(v) {

@@ -826,6 +826,43 @@ func (s *Services) GetOrder(id uint64) (*models.Order, error) {
 	return &o, nil
 }
 
+// RefundOrder marks a paid/notified order as refunded, cancels its commission ledger, and audits.
+func (s *Services) RefundOrder(orderID uint64) (*models.Order, error) {
+	var order models.Order
+	if err := s.DB.First(&order, orderID).Error; err != nil {
+		return nil, errors.New("订单不存在")
+	}
+	switch order.Status {
+	case "paid", "notified", "in_service", "pending_pay":
+		// allowed
+	case "refunded", "cancelled":
+		return &order, nil
+	default:
+		return nil, errors.New("当前状态不可退款")
+	}
+	err := s.DB.Transaction(func(tx *gorm.DB) error {
+		now := time.Now()
+		order.Status = "refunded"
+		order.UpdatedAt = now
+		if err := tx.Save(&order).Error; err != nil {
+			return err
+		}
+		if err := tx.Model(&models.CommissionLedger{}).
+			Where("order_id = ? AND status = ?", order.ID, "pending").
+			Update("status", "cancelled").Error; err != nil {
+			return err
+		}
+		_ = tx.Model(&models.Payment{}).
+			Where("order_id = ? AND status = ?", order.ID, "paid").
+			Update("status", "refunded").Error
+		return nil
+	})
+	if err != nil {
+		return nil, err
+	}
+	return s.GetOrder(orderID)
+}
+
 func (s *Services) CommissionReport() ([]map[string]any, error) {
 	type row struct {
 		UnionID    uint64
