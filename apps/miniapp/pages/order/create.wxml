@@ -1,0 +1,41 @@
+<view class="page">
+  <view class="card" wx:if="{{partner}}">
+    <view class="title">{{partner.nickname}}</view>
+    <view class="sub">{{partner.city}} · ¥{{partner.priceText || ''}}/时</view>
+  </view>
+
+  <view class="form card">
+    <view class="row">
+      <text class="label">日期</text>
+      <picker mode="date" value="{{scheduleDate}}" bindchange="onDateChange">
+        <view class="value">{{scheduleDate || '选择日期'}}</view>
+      </picker>
+    </view>
+    <view class="row">
+      <text class="label">开始时间</text>
+      <picker mode="time" value="{{startTime}}" bindchange="onTimeChange">
+        <view class="value">{{startTime}}</view>
+      </picker>
+    </view>
+    <view class="row">
+      <text class="label">时长(小时)</text>
+      <input class="value input" type="digit" value="{{durationHours}}" bindinput="onDurationInput" />
+    </view>
+    <view class="row">
+      <text class="label">联系电话</text>
+      <input class="value input" type="number" maxlength="11" placeholder="请输入手机号" value="{{contactPhone}}" bindinput="onPhoneInput" />
+    </view>
+  </view>
+
+  <view class="card quote" wx:if="{{quote}}">
+    <view>基础：{{quote.base_amount_fen}} 分</view>
+    <view>加价：{{quote.surcharge_fen}} 分</view>
+    <view class="total">合计：¥{{quote.totalText}}</view>
+    <view class="breakdown">{{quote.breakdown}}</view>
+  </view>
+
+  <view class="btns">
+    <button class="btn-ghost" loading="{{quoting}}" bindtap="onQuote">询价</button>
+    <button class="btn-primary" loading="{{submitting}}" bindtap="onSubmit">下单并支付</button>
+  </view>
+</view>

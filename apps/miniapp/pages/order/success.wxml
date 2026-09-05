@@ -1,0 +1,6 @@
+<view class="page">
+  <view class="ok">支付成功</view>
+  <view class="desc">订单已通知搭子，请保持电话畅通。</view>
+  <view class="no" wx:if="{{orderNo}}">订单号：{{orderNo}}</view>
+  <button class="btn-primary back" bindtap="onBack">返回</button>
+</view>

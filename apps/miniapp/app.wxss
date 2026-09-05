@@ -1,0 +1,21 @@
+page {
+  background: #f5f7fa;
+  color: #303133;
+  font-family: -apple-system, BlinkMacSystemFont, 'PingFang SC', 'Helvetica Neue', sans-serif;
+  box-sizing: border-box;
+}
+
+.btn-primary {
+  background: #1f2d3d;
+  color: #fff;
+  border-radius: 8px;
+  font-size: 30rpx;
+}
+
+.btn-ghost {
+  background: #fff;
+  color: #1f2d3d;
+  border: 1px solid #dcdfe6;
+  border-radius: 8px;
+  font-size: 30rpx;
+}
