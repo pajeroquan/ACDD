@@ -1,0 +1,16 @@
+DROP TABLE IF EXISTS partner_notifications;
+DROP TABLE IF EXISTS audit_logs;
+DROP TABLE IF EXISTS commission_ledgers;
+DROP TABLE IF EXISTS payments;
+DROP TABLE IF EXISTS orders;
+DROP TABLE IF EXISTS browse_session_partners;
+DROP TABLE IF EXISTS browse_sessions;
+DROP TABLE IF EXISTS match_candidates;
+DROP TABLE IF EXISTS match_messages;
+DROP TABLE IF EXISTS match_requests;
+DROP TABLE IF EXISTS wx_users;
+DROP TABLE IF EXISTS partner_availabilities;
+DROP TABLE IF EXISTS partner_tags;
+DROP TABLE IF EXISTS partners;
+DROP TABLE IF EXISTS unions;
+DROP TABLE IF EXISTS admin_users;

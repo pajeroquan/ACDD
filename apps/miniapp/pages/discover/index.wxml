@@ -1,0 +1,37 @@
+<view class="page">
+  <view wx:if="{{loading}}" class="state">加载中...</view>
+  <view wx:elif="{{empty}}" class="state">暂无推荐搭子</view>
+  <block wx:else>
+    <swiper
+      class="card-swiper"
+      vertical="{{false}}"
+      current="{{current}}"
+      bindchange="onSwiperChange"
+      previous-margin="24rpx"
+      next-margin="24rpx"
+    >
+      <swiper-item wx:for="{{cards}}" wx:key="partner_id">
+        <view class="big-card">
+          <image wx:if="{{item.cover}}" class="cover" src="{{item.cover}}" mode="aspectFill" />
+          <view wx:else class="cover cover-empty">{{item.nickname}}</view>
+          <view class="info">
+            <view class="name-row">
+              <text class="name">{{item.nickname}}</text>
+              <text class="meta">{{item.city}} · {{item.gender}}</text>
+            </view>
+            <view class="price">¥{{item.priceText}}/时 · 最短 {{item.min_hours}} 小时</view>
+            <view class="highlight" wx:if="{{item.highlight}}">{{item.highlight}}</view>
+            <view class="bio">{{item.bio}}</view>
+            <view class="tags" wx:if="{{item.tagsText}}">{{item.tagsText}}</view>
+            <view class="reason" wx:if="{{item.reason}}">推荐：{{item.reason}}</view>
+          </view>
+        </view>
+      </swiper-item>
+    </swiper>
+
+    <view class="actions">
+      <button class="btn-ghost action" bindtap="onSkip">跳过</button>
+      <button class="btn-primary action like" bindtap="onLike">喜欢</button>
+    </view>
+  </block>
+</view>

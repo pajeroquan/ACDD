@@ -1,0 +1,46 @@
+services:
+  mysql:
+    image: mysql:8.0
+    environment:
+      MYSQL_ROOT_PASSWORD: root
+      MYSQL_DATABASE: partner
+      MYSQL_USER: partner
+      MYSQL_PASSWORD: partner
+    ports:
+      - "3306:3306"
+    volumes:
+      - mysql_data:/var/lib/mysql
+    command: ["--character-set-server=utf8mb4", "--collation-server=utf8mb4_unicode_ci"]
+    healthcheck:
+      test: ["CMD", "mysqladmin", "ping", "-h", "127.0.0.1", "-upartner", "-ppartner"]
+      interval: 5s
+      timeout: 5s
+      retries: 20
+
+  api:
+    build:
+      context: ./services/api
+      dockerfile: Dockerfile
+    environment:
+      MYSQL_DSN: "partner:partner@tcp(mysql:3306)/partner?parseTime=true&loc=Local&charset=utf8mb4"
+      SERVER_ADDR: ":8080"
+      LLM_MOCK: "true"
+      WECHAT_MOCK_PAY: "true"
+      WECHAT_MOCK_LOGIN: "true"
+    ports:
+      - "8080:8080"
+    depends_on:
+      mysql:
+        condition: service_healthy
+
+  admin-web:
+    build:
+      context: ./apps/admin-web
+      dockerfile: Dockerfile
+    ports:
+      - "5173:80"
+    depends_on:
+      - api
+
+volumes:
+  mysql_data:

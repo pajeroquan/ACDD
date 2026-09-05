@@ -1,0 +1,15 @@
+{
+  "pages": [
+    "pages/discover/index",
+    "pages/order/create",
+    "pages/order/success"
+  ],
+  "window": {
+    "navigationBarTitleText": "兴趣搭子",
+    "navigationBarBackgroundColor": "#1f2d3d",
+    "navigationBarTextStyle": "white",
+    "backgroundColor": "#f5f7fa"
+  },
+  "style": "v2",
+  "sitemapLocation": "sitemap.json"
+}
