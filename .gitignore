@@ -64,6 +64,8 @@ gen/
 
 # Fortran module files
 *.mod
+!services/api/go.mod
+!**/go.mod
 
 # Compiled Static libraries
 *.lai
